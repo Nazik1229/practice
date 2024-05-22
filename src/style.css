@@ -14,11 +14,12 @@ body {
   
 .form {
     position: relative;
-    width: 400px;
+    width: 500px;
     padding: 20px;
     background: url(montel-form.jfif);
     border-radius: 8px;
     margin-top: 100px;
+
 }
   
 .form::before {
@@ -73,7 +74,6 @@ li {
 }
   
 li button {
-    position: absolute;
     right: 10px;
     padding: 4px 8px;
     background-color: #dc3545;
@@ -96,7 +96,7 @@ li span {
 }
   
 .isComplete {
-    margin-right: 60px;
+    right: 70px;
     background-color: #606B56;
 }
   
@@ -110,4 +110,15 @@ li span {
   
 .checkbox {
     margin-right: 10px;
+}
+
+.time {
+    color: white;
+    right: 165px;
+    background-color: rgba(128, 128, 128, 0.5);
+    cursor: auto;
+}
+
+.time:hover {
+    background-color: rgba(128, 128, 128, 0.5);
 }

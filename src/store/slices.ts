@@ -5,6 +5,7 @@ interface Todo {
   id: number;
   title: string;
   completed: boolean;
+  time: number;
 }
 
 export interface TodosState {
@@ -13,9 +14,9 @@ export interface TodosState {
   
 const initialState: TodosState = {
   todos: [
-    { id: 1, title: "Talk 2 me", completed: false },
-    { id: 2, title: "Escape", completed: false },
-    { id: 3, title: "Love you more than me", completed: false }
+    { id: 1, title: "Talk 2 me", completed: false, time: Date.now()},
+    { id: 2, title: "Escape", completed: false, time: Date.now() },
+    { id: 3, title: "Love you more than me", completed: false, time: Date.now() }
   ]
 };
 
@@ -27,7 +28,8 @@ export const todosSlice = createSlice({
       const newTodo: Todo = {
         id: state.todos.length + 1,
         title: action.payload,
-        completed: false
+        completed: false,
+        time: Date.now(),
       };
       state.todos.push(newTodo);
     },

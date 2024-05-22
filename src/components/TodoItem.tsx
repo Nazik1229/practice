@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, completeTodo } from '../store/slices';
 
@@ -6,10 +6,27 @@ interface TodoItemProps {
   id: number;
   title: string;
   completed: boolean;
+  time: number;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({ id, title, completed }) => {
+const TodoItem: React.FC<TodoItemProps> = ({ id, title, completed, time}) => {
   const dispatch = useDispatch();
+  const [elapsedTime, setElapsedTime] = useState<string>('');
+
+  useEffect(() => {
+    const updateElapsedTime = () => {
+      const now = Date.now();
+      const diff = now - time;
+      const minutes = Math.floor(diff / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      setElapsedTime(minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`);
+    };
+
+    updateElapsedTime();
+    const interval = setInterval(updateElapsedTime, 1000);
+
+    return () => clearInterval(interval);
+  }, [time]);
 
   const completeItem = () => {
     dispatch(completeTodo(id));
@@ -32,6 +49,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, completed }) => {
       </button>
       <span style={{ textDecoration: completed ? 'line-through' : 'none' }}>{title}</span>
       {!completed && <button onClick={deleteItem}>delete</button>}
+      <button className="time" > ({elapsedTime} ago)</button>
     </li>
   );
 };

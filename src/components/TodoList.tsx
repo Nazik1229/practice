@@ -13,7 +13,9 @@ const TodoList: React.FC = () => {
             key={todo.id} 
             id={todo.id} 
             title={todo.title} 
-            completed={todo.completed} />
+            completed={todo.completed} 
+            time={todo.time}
+        />
       ))}
     </ul>
   );
