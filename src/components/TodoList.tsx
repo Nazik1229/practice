@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTodos } from '../store/slices';
 import TodoItem from './TodoItem';
@@ -16,9 +16,9 @@ const TodoList: React.FC = () => {
             completed={todo.completed} 
             time={todo.time}
         />
-      ))}
+      ))}  
     </ul>
   );
 };
 
-export default TodoList;
+export default memo(TodoList);

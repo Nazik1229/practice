@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, completeTodo } from '../store/slices';
 
@@ -13,20 +13,19 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, completed, time}) => {
   const dispatch = useDispatch();
   const [elapsedTime, setElapsedTime] = useState<string>('');
 
-  useEffect(() => {
-    const updateElapsedTime = () => {
-      const now = Date.now();
-      const diff = now - time;
-      const minutes = Math.floor(diff / 60000);
-      const seconds = Math.floor((diff % 60000) / 1000);
-      setElapsedTime(minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`);
-    };
+  const updateElapsedTime = useCallback(() => {
+    const now = Date.now();
+    const diff = now - time;
+    const minutes = Math.floor(diff / 60000);
+    setElapsedTime(minutes > 0 ? `${minutes}m` : '0m');
+  }, [time]);
 
+  useEffect(() => {
     updateElapsedTime();
     const interval = setInterval(updateElapsedTime, 1000);
 
     return () => clearInterval(interval);
-  }, [time]);
+  }, [updateElapsedTime]);
 
   const completeItem = () => {
     dispatch(completeTodo(id));
@@ -54,4 +53,4 @@ const TodoItem: React.FC<TodoItemProps> = ({ id, title, completed, time}) => {
   );
 };
 
-export default TodoItem;
+export default React.memo(TodoItem);
